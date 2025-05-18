@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animasyonlu Merhaba</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        
+        .merhaba-container {
+            position: relative;
+        }
+        
+        .merhaba {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1.5s ease-out forwards;
+        }
+        
+        .merhaba span {
+            display: inline-block;
+        }
+        
+        .merhaba span:nth-child(1) { animation-delay: 0.1s; }
+        .merhaba span:nth-child(2) { animation-delay: 0.2s; }
+        .merhaba span:nth-child(3) { animation-delay: 0.3s; }
+        .merhaba span:nth-child(4) { animation-delay: 0.4s; }
+        .merhaba span:nth-child(5) { animation-delay: 0.5s; }
+        .merhaba span:nth-child(6) { animation-delay: 0.6s; }
+        .merhaba span:nth-child(7) { animation-delay: 0.7s; }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(100, 149, 237, 0.2);
+            animation: ripple 3s infinite ease-out;
+            transform: scale(0);
+            z-index: -1;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="merhaba-container">
+        <h1 class="merhaba" id="merhaba">
+            <span>H</span>
+            <span>E</span>
+            <span>P</span>
+            <span>İ</span>
+            <span>N</span>
+            <span>İ</span>
+            <span>Z</span>
+            <span>İ</span>
+            <span>N</span>
+            <span> </span>
+            <span>A</span>
+            <span>M</span>
+            <span>K</span>
+        </h1>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Harfleri tek tek animasyonlu göster
+            const letters = document.querySelectorAll('.merhaba span');
+            
+            // Ripple efekti oluştur
+            function createRipple() {
+                const circle = document.createElement('div');
+                circle.classList.add('circle');
+                
+                const size = Math.random() * 200 + 100;
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                circle.style.left = `${x - size/2}px`;
+                circle.style.top = `${y - size/2}px`;
+                
+                document.body.appendChild(circle);
+                
+                // Animasyon bitince sil
+                setTimeout(() => {
+                    circle.remove();
+                }, 3000);
+            }
+            
+            // Arka plan ripple efektleri
+            setInterval(createRipple, 1000);
+            
+            // Sayfa yüklendikten sonra animasyonu başlat
+            setTimeout(() => {
+                document.getElementById('merhaba').style.opacity = '1';
+            }, 500);
+            
+            // Fare hareketinde renk değişimi
+            document.addEventListener('mousemove', function(e) {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                document.body.style.background = `linear-gradient(135deg, 
+                    hsl(${x * 360}, 70%, 85%) 0%, 
+                    hsl(${y * 360}, 70%, 75%) 100%)`;
+            });
+        });
+    </script>
+</body>
+</html>
